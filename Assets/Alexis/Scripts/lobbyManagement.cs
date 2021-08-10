@@ -90,5 +90,13 @@ public class lobbyManagement : MonoBehaviour
         _parent.SetActive(false);
     }
 
-    public void updateName(TextMeshProUGUI _name) { _name.text = GetComponent<TextMeshProUGUI>().text; }
+    public void leaveGame()
+    {
+        if (!hasHostedGame) { }
+        else { }
+    }
+
+    public void updateCharacterLimit(GameObject _target) { _target.transform.GetChild(0).gameObject.GetComponent<TMP_InputField>().characterLimit = 8; }
+
+    public void updateName(GameObject _target) { _target.GetComponent<TextMeshProUGUI>().text = "• " + _target.transform.GetChild(0).gameObject.GetComponent<TMP_InputField>().text; }
 }
