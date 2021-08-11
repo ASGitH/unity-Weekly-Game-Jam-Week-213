@@ -15,7 +15,7 @@ namespace UDP
         private State state = new State();
         private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
         private AsyncCallback recv = null;
-        static public Dictionary<string, byte[]> lastPacket;
+        public static Dictionary<string, byte[]> lastPacket = new Dictionary<string, byte[]>();
         public static Dictionary<string, EndPoint> clients = new Dictionary<string, EndPoint>();
 
         public class State

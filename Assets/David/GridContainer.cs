@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [ExecuteInEditMode]
 public class GridContainer : MonoBehaviour
@@ -10,7 +11,7 @@ public class GridContainer : MonoBehaviour
     [SerializeField]
     GameObject tilePrefab;
     [SerializeField]
-    int size = 10;
+    public int size = 10;
     public byte[] destroyedGrid;
     bool gracePeriod = true;
     // Start is called before the first frame update
@@ -53,9 +54,12 @@ public class GridContainer : MonoBehaviour
         {
             for(int i = 0; i < size*size; i++)
             {
-                if(destroyedGrid[i]==0 && UDP.UDPSocket.lastPacket != null && (UDP.UDPSocket.lastPacket[i]!=0))
+                for (int j = 0; j < UDP.UDPSocket.clients.Count; j++) 
                 {
-                    destroyTile(i);
+                    if (destroyedGrid[i] == 0 && UDP.UDPSocket.lastPacket != null && (UDP.UDPSocket.lastPacket[UDP.UDPSocket.clients.ElementAt(j).Key][i] != 0))
+                    {
+                        destroyTile(i);
+                    }
                 }
             }
         }

@@ -139,6 +139,7 @@ public class lobbyManagement : MonoBehaviour
         player.gameObject.SetActive(true);
         var gc = FindObjectOfType<GridContainer>();
         gc.StartCoroutine(gc.grace());
+        Networking.skipLobby = true;
         _lobby.SetActive(false);
         
 
