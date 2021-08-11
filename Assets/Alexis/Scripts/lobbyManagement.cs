@@ -12,7 +12,7 @@ public class lobbyManagement : MonoBehaviour
 
     private string enteredIPAddress = "", hostIPAddress = "";
 
-    public Button cancelButton;
+    public Button cancelButton, startButton;
 
     public GameObject ipAddress;
     public GameObject players;
@@ -62,6 +62,8 @@ public class lobbyManagement : MonoBehaviour
         _parent.SetActive(true);
 
         players.SetActive(false);
+
+        startButton.gameObject.SetActive(false);
     }
 
     public void connectToGame(GameObject _target) 
@@ -105,6 +107,8 @@ public class lobbyManagement : MonoBehaviour
         players.transform.GetChild(3).gameObject.SetActive(false);
         Networking.lobby = this;
         StartCoroutine(Networking.Server());
+
+        startButton.gameObject.SetActive(true);
     }
 
     public void joinGame(GameObject _parent)
@@ -130,6 +134,8 @@ public class lobbyManagement : MonoBehaviour
         if (!hasHostedGame) { }
         else { }
     }
+
+    public void startGame(GameObject _lobby) { _lobby.SetActive(false); }
 
     public void updateCharacterLimit(GameObject _target) { _target.transform.GetChild(0).gameObject.GetComponent<TMP_InputField>().characterLimit = 8; }
 
