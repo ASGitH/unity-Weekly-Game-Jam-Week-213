@@ -38,7 +38,7 @@ public class GridContainer : MonoBehaviour
         } else
         {
             Networking.gc = this;
-            StartCoroutine(Networking.Update());
+            
         }
     }
     void Update()
