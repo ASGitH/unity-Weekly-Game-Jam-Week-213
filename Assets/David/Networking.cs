@@ -61,8 +61,8 @@ public class Networking
                 }
                 yield return null;
             }
+            serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
         }
-        serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
         //do the game stuff (send over player positions and grid state)
         while (true)
         {
