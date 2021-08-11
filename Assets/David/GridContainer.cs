@@ -52,19 +52,23 @@ public class GridContainer : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            for(int i = 0; i < size*size; i++)
+            if (!gracePeriod)
             {
-                for (int j = 0; j < UDP.UDPSocket.clients.Count; j++) 
+                for (int j = 0; j < UDP.UDPSocket.clients.Count; j++)
                 {
-                    if (destroyedGrid[i] == 0 && UDP.UDPSocket.lastPacket != null && (UDP.UDPSocket.lastPacket[UDP.UDPSocket.clients.ElementAt(j).Key][i] != 0))
+                    for (int i = 0; i < size * size; i++)
                     {
-                        destroyTile(i);
+                        if (destroyedGrid[i] == 0 && UDP.UDPSocket.packetQue != null && (UDP.UDPSocket.packetQue[UDP.UDPSocket.clients.ElementAt(j).Key][i] != 0))
+                        {
+                            destroyTile(i);
+                        }
                     }
+                    UDP.UDPSocket.hasRead[UDP.UDPSocket.clients.ElementAt(j).Key] = true;
                 }
             }
         }
 
-    }
+    } 
     public void destroyTile(int x, int y)
     {
         if (gracePeriod) return;
@@ -78,6 +82,7 @@ public class GridContainer : MonoBehaviour
     }
     public void destroyTile(int i)
     {
+        if (gracePeriod) return;
         //find the tile in the grid
         //start co routine to animated it's demise
         if (i < size*size)
@@ -90,7 +95,7 @@ public class GridContainer : MonoBehaviour
     {
 
         float velocity = 0;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 130; i++)
         {
             velocity -= 9.83f*Time.deltaTime;//gravity

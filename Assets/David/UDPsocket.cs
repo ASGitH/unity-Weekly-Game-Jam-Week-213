@@ -15,8 +15,9 @@ namespace UDP
         private State state = new State();
         private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
         private AsyncCallback recv = null;
-        public static Dictionary<string, byte[]> lastPacket = new Dictionary<string, byte[]>();
+        public static Dictionary<string, byte[]> packetQue = new Dictionary<string,byte[]>();
         public static Dictionary<string, EndPoint> clients = new Dictionary<string, EndPoint>();
+        public static Dictionary<string, bool> hasRead = new Dictionary<string, bool>();
 
         public class State
         {
@@ -65,17 +66,28 @@ namespace UDP
             _socket.BeginReceiveFrom(state.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv = (ar) =>
             {
                 State so = (State)ar.AsyncState;
+                
+                if (epFrom != null && !clients.ContainsKey(((IPEndPoint)epFrom).Address.ToString()))
+                {
+                    try
+                    {
+                        clients.Add(((IPEndPoint)epFrom).Address.ToString(), epFrom);
+                        packetQue.Add(((IPEndPoint)epFrom).Address.ToString(), so.buffer);
+                        hasRead.Add(((IPEndPoint)epFrom).Address.ToString(), true);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                if (hasRead[((IPEndPoint)epFrom).Address.ToString()])
+                {
+                    if (so.buffer != null) packetQue[((IPEndPoint)epFrom).Address.ToString()] = so.buffer; //keeps track of each clients last packet
+                    hasRead[((IPEndPoint)epFrom).Address.ToString()] = false;
+                }
                 int bytes = _socket.EndReceiveFrom(ar, ref epFrom);
                 _socket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
-                
-                
-               
-                if(epFrom != null && !clients.ContainsKey(((IPEndPoint)epFrom).Address.ToString()))
-                {
-                    clients.Add(((IPEndPoint)epFrom).Address.ToString(), epFrom);
-                    lastPacket.Add(((IPEndPoint)epFrom).Address.ToString(), so.buffer);
-                }
-                if(so.buffer != null) lastPacket[((IPEndPoint)epFrom).Address.ToString()] = so.buffer; //keeps track of each clients last packet
             }, state);
         }
     }

@@ -21,6 +21,7 @@ public class Networking
     public static lobbyManagement lobby;
     public static Rigidbody dummyPlayers;
     public static int playerCount = 1;
+    
     public static IEnumerator Client()
     {
         if (!skipLobby)
@@ -32,10 +33,14 @@ public class Networking
         {
             socket.Send(new byte[] { 0xE9, 0x26 });
             //do the loby stuff here
-            if (UDPSocket.lastPacket != null && UDPSocket.lastPacket.ContainsKey(ip) && UDPSocket.lastPacket[ip].Length >= 2 && UDPSocket.lastPacket[ip][0] == 0xE6 && UDPSocket.lastPacket[ip][1] == 0x21) //if the server sends you the magic number
-            {
-                lobby.startGame(lobby.gameObject);
-            }
+                if (UDPSocket.packetQue != null && UDPSocket.packetQue.ContainsKey(ip) && UDPSocket.packetQue[ip].Length >= 2 && UDPSocket.packetQue[ip][0] == 0xE6 && UDPSocket.packetQue[ip][1] == 0x21) //if the server sends you the magic number
+                {
+                    UDP.UDPSocket.hasRead[ip] = true;
+                    yield return new WaitForSeconds(1);
+                    lobby.startGame(lobby.gameObject);
+                    break;
+                }
+            UDP.UDPSocket.hasRead[ip] = true;
             yield return null;
         }
 
@@ -60,12 +65,9 @@ public class Networking
                     playerCount = UDPSocket.clients.Count;
                 }
                 yield return null;
-                if (skipLobby)
-                {
-                    Debug.Log("WE RETURN!");
-                }
             }
             serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
+            yield return new WaitForSeconds(1);
         }
         //do the game stuff (send over player positions and grid state)
         while (true)
