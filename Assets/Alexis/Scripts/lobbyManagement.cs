@@ -67,7 +67,9 @@ public class lobbyManagement : MonoBehaviour
     public void connectToGame(GameObject _target) 
     {
         enteredIPAddress = _target.transform.gameObject.GetComponent<TMP_InputField>().text;
-
+        Networking.ip = enteredIPAddress;
+        Networking.lobby = this;
+        StartCoroutine(Networking.Client());
         ipAddress.transform.GetChild(0).gameObject.SetActive(false);
 
         ipAddress.transform.GetChild(1).gameObject.SetActive(true);
@@ -101,6 +103,8 @@ public class lobbyManagement : MonoBehaviour
         players.transform.GetChild(1).gameObject.SetActive(false);
         players.transform.GetChild(2).gameObject.SetActive(false);
         players.transform.GetChild(3).gameObject.SetActive(false);
+        Networking.lobby = this;
+        StartCoroutine(Networking.Server());
     }
 
     public void joinGame(GameObject _parent)
@@ -118,6 +122,7 @@ public class lobbyManagement : MonoBehaviour
         ipAddress.transform.GetChild(3).gameObject.SetActive(true);
 
         _parent.SetActive(false);
+
     }
 
     public void leaveGame()
