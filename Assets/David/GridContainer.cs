@@ -14,14 +14,13 @@ public class GridContainer : MonoBehaviour
     public byte[] destroyedGrid;
     bool gracePeriod = true;
     // Start is called before the first frame update
-    IEnumerator grace()
+    public IEnumerator grace()
     {
         yield return new WaitForSeconds(5);
         gracePeriod = false;
     }
     void Start()
     {
-        StartCoroutine(grace());
         destroyedGrid = new byte[size * size];
         if (!Application.isPlaying)
         {

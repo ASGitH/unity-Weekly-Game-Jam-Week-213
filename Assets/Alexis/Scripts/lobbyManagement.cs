@@ -18,7 +18,7 @@ public class lobbyManagement : MonoBehaviour
     public GameObject players;
 
     public TextMeshProUGUI hostIPAddressText;
-
+    public playerController player;
     void Start() { }
 
     void Update() { }
@@ -135,7 +135,14 @@ public class lobbyManagement : MonoBehaviour
         else { }
     }
 
-    public void startGame(GameObject _lobby) { _lobby.SetActive(false); }
+    public void startGame(GameObject _lobby) {
+        player.gameObject.SetActive(true);
+        var gc = FindObjectOfType<GridContainer>();
+        gc.StartCoroutine(gc.grace());
+        _lobby.SetActive(false);
+        
+
+    }
 
     public void updateCharacterLimit(GameObject _target) { _target.transform.GetChild(0).gameObject.GetComponent<TMP_InputField>().characterLimit = 8; }
 
