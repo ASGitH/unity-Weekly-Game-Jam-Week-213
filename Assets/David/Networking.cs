@@ -17,7 +17,7 @@ public class Networking
     static UDPSocket serverSocket;
     public static GridContainer gc;
     public static string ip;
-    public static bool skipLobby;
+    public static bool skipLobby = false;
     public static lobbyManagement lobby;
     public static Rigidbody dummyPlayers;
     public static int playerCount = 1;
@@ -60,6 +60,10 @@ public class Networking
                     playerCount = UDPSocket.clients.Count;
                 }
                 yield return null;
+                if (skipLobby)
+                {
+                    Debug.Log("WE RETURN!");
+                }
             }
             serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
         }

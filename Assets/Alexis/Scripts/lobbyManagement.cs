@@ -19,6 +19,7 @@ public class lobbyManagement : MonoBehaviour
 
     public TextMeshProUGUI hostIPAddressText;
     public playerController player;
+    public GridContainer gc;
     void Start() { }
 
     void Update() { }
@@ -71,7 +72,7 @@ public class lobbyManagement : MonoBehaviour
         enteredIPAddress = _target.transform.gameObject.GetComponent<TMP_InputField>().text;
         Networking.ip = enteredIPAddress;
         Networking.lobby = this;
-        StartCoroutine(Networking.Client());
+        gc.StartCoroutine(Networking.Client());
         ipAddress.transform.GetChild(0).gameObject.SetActive(false);
 
         ipAddress.transform.GetChild(1).gameObject.SetActive(true);
@@ -106,7 +107,7 @@ public class lobbyManagement : MonoBehaviour
         players.transform.GetChild(2).gameObject.SetActive(false);
         players.transform.GetChild(3).gameObject.SetActive(false);
         Networking.lobby = this;
-        StartCoroutine(Networking.Server());
+        gc.StartCoroutine(Networking.Server());
 
         startButton.gameObject.SetActive(true);
     }
@@ -137,7 +138,6 @@ public class lobbyManagement : MonoBehaviour
 
     public void startGame(GameObject _lobby) {
         player.gameObject.SetActive(true);
-        var gc = FindObjectOfType<GridContainer>();
         gc.StartCoroutine(gc.grace());
         Networking.skipLobby = true;
         _lobby.SetActive(false);
