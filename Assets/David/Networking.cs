@@ -19,6 +19,7 @@ public class Networking
     public static string ip;
     public static bool skipLobby;
     public static lobbyManagement lobby;
+    public static Rigidbody dummyPlayers;
     public static IEnumerator Client()
     {
         if (!skipLobby)
@@ -41,8 +42,8 @@ public class Networking
         {
             serverSocket = new UDPSocket();
             serverSocket.Server("127.0.0.1", 2700);
-            //wait for players or start button to be pressed, minimum of 2 players
-            //UDPSocket.clients
+            UDPSocket.clients.Count
+            //get player names and increase player count
             skipLobby = true;
         }
         //do the game stuff (send over player positions and grid state)

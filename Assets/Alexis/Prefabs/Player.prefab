@@ -135,7 +135,7 @@ MonoBehaviour:
   resetTrigger: {fileID: 0}
   cameraSensitivityX: 135
   cameraSensitivityY: 135
-  jumpForce: 15
+  jumpForce: 8
   movementSpeed: 10
   referenceToGridContainer: {fileID: 0}
 --- !u!54 &1224248569837248549

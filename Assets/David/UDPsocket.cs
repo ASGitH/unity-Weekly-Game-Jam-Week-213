@@ -15,7 +15,7 @@ namespace UDP
         private State state = new State();
         private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
         private AsyncCallback recv = null;
-        static public byte[] lastPacket;
+        static public Dictionary<string, byte[]> lastPacket;
         public static Dictionary<string, EndPoint> clients = new Dictionary<string, EndPoint>();
 
         public class State
@@ -68,13 +68,14 @@ namespace UDP
                 int bytes = _socket.EndReceiveFrom(ar, ref epFrom);
                 _socket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
                 
-                if(so.buffer != null) lastPacket = so.buffer;
+                
                
                 if(epFrom != null && !clients.ContainsKey(((IPEndPoint)epFrom).Address.ToString()))
                 {
-                    
                     clients.Add(((IPEndPoint)epFrom).Address.ToString(), epFrom);
+                    lastPacket.Add(((IPEndPoint)epFrom).Address.ToString(), so.buffer);
                 }
+                if(so.buffer != null) lastPacket[((IPEndPoint)epFrom).Address.ToString()] = so.buffer; //keeps track of each clients last packet
             }, state);
         }
     }

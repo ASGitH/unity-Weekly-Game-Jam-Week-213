@@ -121,8 +121,8 @@ public class playerController : MonoBehaviour
         if (!isActive) { rb.AddForce(new Vector3(moveDirection.normalized.x * movementSpeed * 8f, moveDirection.normalized.y * movementSpeed * 8f, moveDirection.normalized.z * movementSpeed * 8f), ForceMode.Acceleration); }
         else
         {
-            if (!isGrounded) { rb.AddForce(new Vector3(moveDirection.normalized.x * movementSpeed * 8f * 0.1f, 0f, moveDirection.normalized.z * movementSpeed * 0.4f), ForceMode.Acceleration); }
-            else { rb.AddForce(new Vector3(moveDirection.normalized.x * movementSpeed * 8f, 0f, moveDirection.normalized.z * movementSpeed * 16f), ForceMode.Acceleration); }
+            if (!isGrounded) { rb.AddForce(new Vector3(moveDirection.normalized.x * movementSpeed * .8f, 0f, moveDirection.normalized.z * movementSpeed * 0.8f), ForceMode.Acceleration); }
+            else { rb.AddForce(new Vector3(moveDirection.normalized.x * movementSpeed * 16f, 0f, moveDirection.normalized.z * movementSpeed * 16f), ForceMode.Acceleration); }
         }
     }
 

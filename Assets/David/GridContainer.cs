@@ -86,7 +86,7 @@ public class GridContainer : MonoBehaviour
     {
 
         float velocity = 0;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 130; i++)
         {
             velocity -= 9.83f*Time.deltaTime;//gravity
