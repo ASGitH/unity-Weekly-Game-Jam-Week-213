@@ -12,9 +12,16 @@ public class GridContainer : MonoBehaviour
     [SerializeField]
     int size = 10;
     public byte[] destroyedGrid;
+    bool gracePeriod = true;
     // Start is called before the first frame update
+    IEnumerator grace()
+    {
+        yield return new WaitForSeconds(5);
+        gracePeriod = false;
+    }
     void Start()
     {
+        StartCoroutine(grace());
         destroyedGrid = new byte[size * size];
         if (!Application.isPlaying)
         {
@@ -57,6 +64,7 @@ public class GridContainer : MonoBehaviour
     }
     public void destroyTile(int x, int y)
     {
+        if (gracePeriod) return;
         //find the tile in the grid
         //start co routine to animated it's demise
         if (x < size && y < size && x >= 0 && y >= 0)
