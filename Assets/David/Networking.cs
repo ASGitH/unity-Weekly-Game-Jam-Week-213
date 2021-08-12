@@ -36,7 +36,6 @@ public class Networking
                 if (UDPSocket.packetQue != null && UDPSocket.packetQue.ContainsKey(ip) && UDPSocket.packetQue[ip].Length >= 2 && UDPSocket.packetQue[ip][0] == 0xE6 && UDPSocket.packetQue[ip][1] == 0x21) //if the server sends you the magic number
                 {
                     UDP.UDPSocket.hasRead[ip] = true;
-                    yield return new WaitForSeconds(1);
                     lobby.startGame(lobby.gameObject);
                     break;
                 }
@@ -66,6 +65,9 @@ public class Networking
                 }
                 yield return null;
             }
+            serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
+            serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
+            serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
             serverSocket.SendServer(new byte[] { 0xE6, 0x21 });
             yield return new WaitForSeconds(1);
         }
