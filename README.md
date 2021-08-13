@@ -13,13 +13,17 @@ To Jump: the space key
 To Look Around: the mouse
 
 ## Miscellaneous
+Additional Information
+* When the game begins, you'll have about a 5 second grace period before the ground below will start to give out.
+* Once you fall, you will be able to spectate and fly around the scene.
+
 Credits:
-* Alexis Serna - Player/UI Programming & Voxel Modeler
+* **Alexis Serna** - Player/UI Programming & Voxel Modeler
   - GitHub: [ASGitH](https://github.com/ASGitH)
   - LinkedIn: [Alexis Serna](https://www.linkedin.com/in/alexisserna)
   - Twitter: [ASGDTweet](https://twitter.com/ASGDTweet)
 
-* David Warford - Gameplay/Networking Programmer
+* **David Warford** - Gameplay/Networking Programmer
   - Email: [davidwarfordgamedev@gmail.com](davidwarfordgamedev@gmail.com)
   - LinkedIn: [David Warford](https://www.linkedin.com/in/davidwarford)
 
